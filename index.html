@@ -1,128 +1,284 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <style>
-      /* add all CSS here */
+        /* add all CSS here */
     </style>
     <script>
       /* add all JS here */
-    </script>    
-  </head>
-  <!-- only modify content inside the STYLE and SCRIPT elements above this line -->
+    </script>
+</head>
+<!-- only modify content inside the STYLE and SCRIPT elements above this line -->
+<style>
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+    ul li.recipe {
+        margin-top: 0.2vw;
+        width: 15vw;
+        height: 7vw;
+        background: dodgerblue;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2vw;
+        border: solid 2px blue;
+    }
 
-  <!-- please DO NOT modify anything below this line -->
-  <body>
-    <button class="sort" data-order="random">Randomize</button>
-    <button class="sort" data-order="name">Sort by Name</button>
-    <button class="sort" data-order="calories">Sort by Calories</button>
-    <div>
-      <ul>
+    ul li.recipe span.calories {
+        display: none;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    ul.ingredients {
+        margin-left: 15vw;
+        margin-top: -1.5vw;
+        /*padding-top: 0.5vw;*/
+        width: 15vw;
+        height: 7.2vw;
+        overflow-y: auto;
+        color: blue;
+        font-weight: bold;
+        list-style-type: none;
+        box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 1);
+    }
+</style>
+<!-- please DO NOT modify anything below this line -->
+<body>
+<button class="sort" data-order="random">Randomize</button>
+<button class="sort" data-order="name">Sort by Name</button>
+<button class="sort" data-order="calories">Sort by Calories</button>
+<div>
+    <ul>
         <li class="recipe" data-id="309501">
-          <span class="calories">140</span>
-          <span class="name">Roasted cabbage with lemon</span>
-          <ul class="ingredients">
-            <li><span class="amount">1</span>green cabbage</li>
-            <li><span class="amount">2 tbsp</span>olive oil</li>
-            <li><span class="amount">3 tbsp</span>lemon juice</li>
-            <li>salt</li>
-            <li>freshly ground black pepper</li>
-          </ul>
+            <span class="calories">140</span>
+            <span class="name">Roasted cabbage with lemon</span>
+            <ul class="ingredients">
+                <li><span class="amount">1</span>green cabbage</li>
+                <li><span class="amount">2 tbsp</span>olive oil</li>
+                <li><span class="amount">3 tbsp</span>lemon juice</li>
+                <li>salt</li>
+                <li>freshly ground black pepper</li>
+            </ul>
         </li>
         <li class="recipe" data-id="1102925">
-          <span class="calories">270</span>
-          <span class="name">Grilled Shrimp Tacos</span>
-          <ul class="ingredients">
-            <li><span class="amount">1 lb</span>shrimp</li>
-            <li><span class="amount">1</span>avocado</li>
-            <li><span class="amount">1 tbsp</span>olive oil</li>
-            <li><span class="amount">1/2 tsp</span>chili powder</li>
-            <li><span class="amount">1/2 tsp</span>ground cumin</li>
-            <li><span class="amount">1/4 tsp</span>cayenne pepper</li>
-            <li><span class="amount">8</span>corn tortillas</li>
-            <li>lime wedge</li>
-            <li>sour cream</li>
-          </ul>
+            <span class="calories">270</span>
+            <span class="name">Grilled Shrimp Tacos</span>
+            <ul class="ingredients">
+                <li><span class="amount">1 lb</span>shrimp</li>
+                <li><span class="amount">1</span>avocado</li>
+                <li><span class="amount">1 tbsp</span>olive oil</li>
+                <li><span class="amount">1/2 tsp</span>chili powder</li>
+                <li><span class="amount">1/2 tsp</span>ground cumin</li>
+                <li><span class="amount">1/4 tsp</span>cayenne pepper</li>
+                <li><span class="amount">8</span>corn tortillas</li>
+                <li>lime wedge</li>
+                <li>sour cream</li>
+            </ul>
         </li>
         <li class="recipe" data-id="1312685">
-          <span class="calories">480</span>
-          <span class="name">Pan-Fried Pork Chops</span>
-          <ul class="ingredients">
-            <li><span class="amount">3</span>bone-in pork chops</li>
-            <li><span class="amount">1/2 cup</span>coconut flour</li>
-            <li><span class="amount">1 tsp</span>seasoning salt</li>
-            <li><span class="amount">1 tsp</span>black pepper</li>
-            <li><span class="amount">1 tbsp</span>butter</li>
-          </ul>
+            <span class="calories">480</span>
+            <span class="name">Pan-Fried Pork Chops</span>
+            <ul class="ingredients">
+                <li><span class="amount">3</span>bone-in pork chops</li>
+                <li><span class="amount">1/2 cup</span>coconut flour</li>
+                <li><span class="amount">1 tsp</span>seasoning salt</li>
+                <li><span class="amount">1 tsp</span>black pepper</li>
+                <li><span class="amount">1 tbsp</span>butter</li>
+            </ul>
         </li>
         <li class="recipe" data-id="2221642">
-          <span class="calories">750</span>
-          <span class="name">Baked Macaroni and Cheese</span>
-          <ul class="ingredients">
-            <li><span class="amount">2 cups</span>macaroni</li>
-            <li><span class="amount">4 tbsp margarine</span></li>
-            <li><span class="amount">2 tbsp</span>flour</li>
-            <li><span class="amount">3 cups</span>shredded cheddar cheese</li>
-            <li><span class="amount">1 cup</span>milk</li>
-            <li><span class="amount">1 tsp</span>salt</li>
-          </ul>
+            <span class="calories">750</span>
+            <span class="name">Baked Macaroni and Cheese</span>
+            <ul class="ingredients">
+                <li><span class="amount">2 cups</span>macaroni</li>
+                <li><span class="amount">4 tbsp margarine</span></li>
+                <li><span class="amount">2 tbsp</span>flour</li>
+                <li><span class="amount">3 cups</span>shredded cheddar cheese</li>
+                <li><span class="amount">1 cup</span>milk</li>
+                <li><span class="amount">1 tsp</span>salt</li>
+            </ul>
         </li>
         <li class="recipe" data-id="772170">
-          <span class="calories">300</span>
-          <span class="name">Red Lentil Soup</span>
-          <ul class="ingredients">
-            <li><span class="amount">1 cup</span>red lentils</li>
-            <li><span class="amount">2 cups</span>water</li>
-            <li><span class="amount">1 whole</span>bay leaf</li>
-            <li><span class="amount">1 tbsp</span>olive oil</li>
-            <li><span class="amount">1</span>diced carrot</li>
-            <li><span class="amount">2 stalks</span>diced celery</li>
-            <li><span class="amount">2 tbsp</span>lemon juice</li>
-            <li><span class="amount">1</span>yellow onion</li>
-            <li><span class="amount">1/2 tsp</span>salt</li>
-            <li><span class="amount">1/4 tsp</span>turmeric</li>
-            <li><span class="amount">1/8 tsp</span>garam masala</li>
-            <li><span class="amount">1 tbsp</span>fenugreek leaves</li>
-            <li><span class="amount">5</span>cilantro stems</li>
-            <li><span class="amount">1/8 tsp</span>cayenne pepper</li>
-          </ul>
+            <span class="calories">300</span>
+            <span class="name">Red Lentil Soup</span>
+            <ul class="ingredients">
+                <li><span class="amount">1 cup</span>red lentils</li>
+                <li><span class="amount">2 cups</span>water</li>
+                <li><span class="amount">1 whole</span>bay leaf</li>
+                <li><span class="amount">1 tbsp</span>olive oil</li>
+                <li><span class="amount">1</span>diced carrot</li>
+                <li><span class="amount">2 stalks</span>diced celery</li>
+                <li><span class="amount">2 tbsp</span>lemon juice</li>
+                <li><span class="amount">1</span>yellow onion</li>
+                <li><span class="amount">1/2 tsp</span>salt</li>
+                <li><span class="amount">1/4 tsp</span>turmeric</li>
+                <li><span class="amount">1/8 tsp</span>garam masala</li>
+                <li><span class="amount">1 tbsp</span>fenugreek leaves</li>
+                <li><span class="amount">5</span>cilantro stems</li>
+                <li><span class="amount">1/8 tsp</span>cayenne pepper</li>
+            </ul>
         </li>
         <li class="recipe" data-id="1309903">
-          <span class="calories">60</span>
-          <span class="name">Paneer Masala Dosa</span>
-          <ul class="ingredients">
-            <li><span class="amount">2 tbsp</span>ghee</li>
-            <li><span class="amount">1/2 tsp</span>jeera</li>
-            <li><span class="amount">1 sprig</span>curry leaves</li>
-            <li><span class="amount">1</span>onion</li>
-            <li><span class="amount">1</span>tomato</li>
-            <li><span class="amount">1 tsp</span>garlic paste</li>
-            <li><span class="amount">1 tsp</span>chili powder</li>
-            <li><span class="amount">1/2 tsp</span>coriander powder</li>
-            <li><span class="amount">1/4 tsp</span>ground cinnamon</li>
-            <li><span class="amount">1 tsp</span>garam masala</li>
-            <li><span class="amount">1 tsp</span>methi</li>
-            <li><span class="amount">325 g</span>paneer</li>
-            <li><span class="amount">15</span>cashew nuts</li>
-            <li><span class="amount">1 tsp</span>fennel seeds</li>
-          </ul>
+            <span class="calories">60</span>
+            <span class="name">Paneer Masala Dosa</span>
+            <ul class="ingredients">
+                <li><span class="amount">2 tbsp</span>ghee</li>
+                <li><span class="amount">1/2 tsp</span>jeera</li>
+                <li><span class="amount">1 sprig</span>curry leaves</li>
+                <li><span class="amount">1</span>onion</li>
+                <li><span class="amount">1</span>tomato</li>
+                <li><span class="amount">1 tsp</span>garlic paste</li>
+                <li><span class="amount">1 tsp</span>chili powder</li>
+                <li><span class="amount">1/2 tsp</span>coriander powder</li>
+                <li><span class="amount">1/4 tsp</span>ground cinnamon</li>
+                <li><span class="amount">1 tsp</span>garam masala</li>
+                <li><span class="amount">1 tsp</span>methi</li>
+                <li><span class="amount">325 g</span>paneer</li>
+                <li><span class="amount">15</span>cashew nuts</li>
+                <li><span class="amount">1 tsp</span>fennel seeds</li>
+            </ul>
         </li>
         <li class="recipe" data-id="356872">
-          <span class="calories">230</span>
-          <span class="name">Broccoli frittata</span>
-          <ul class="ingredients">
-            <li><span class="amount">3 cups</span>broccoli florets</li>
-            <li><span class="amount">1 tbsp</span>butter</li>
-            <li><span class="amount">1 tbsp</span>olive oil</li>
-            <li><span class="amount">1 clove</span>minced garlic</li>
-            <li><span class="amount">1</span>chopped onion</li>
-            <li><span class="amount">1/2 tsp</span>chopped basil</li>
-            <li><span class="amount">1/2 tsp</span>chopped parsley</li>
-            <li><span class="amount">8</span>eggs</li>
-            <li><span class="amount">2</span>egg whites</li>
-            <li><span class="amount">1/2 cup</span>parmigiano reggiano cheese</li>
-          </ul>
+            <span class="calories">230</span>
+            <span class="name">Broccoli frittata</span>
+            <ul class="ingredients">
+                <li><span class="amount">3 cups</span>broccoli florets</li>
+                <li><span class="amount">1 tbsp</span>butter</li>
+                <li><span class="amount">1 tbsp</span>olive oil</li>
+                <li><span class="amount">1 clove</span>minced garlic</li>
+                <li><span class="amount">1</span>chopped onion</li>
+                <li><span class="amount">1/2 tsp</span>chopped basil</li>
+                <li><span class="amount">1/2 tsp</span>chopped parsley</li>
+                <li><span class="amount">8</span>eggs</li>
+                <li><span class="amount">2</span>egg whites</li>
+                <li><span class="amount">1/2 cup</span>parmigiano reggiano cheese</li>
+            </ul>
         </li>
-      </ul>
-    </div>
-  </body>
+    </ul>
+</div>
+<script>
+  var recipeCards = document.querySelectorAll('ul li.recipe');
+  Array.from(recipeCards).forEach(function (recipeCard) {
+    recipeCard.addEventListener("click", function (e) {
+      console.log("click", e);
+      var target = e.target;
+      var iCards = target.querySelector('ul.ingredients');
+      iCards.classList.toggle('hide');
+    })
+  });
+
+  var randomizeNodes = function (items) {
+    for (var i = items.length - 1; i > 0; i--) {
+      var rand = Math.floor(Math.random() * (i + 1));
+      var temp = items[i];
+      items[i] = items[rand];
+      items[rand] = temp;
+    }
+
+    return items;
+
+  };
+
+  var randomizeList = function () {
+    var list = document.querySelector('.recipe').parentNode;
+    var nodes = list.children;
+    var i = 0;
+    nodes = Array.prototype.slice.call(nodes);
+    nodes = randomizeNodes(nodes);
+    while (i < nodes.length) {
+      list.appendChild(nodes[i]);
+      i++;
+    }
+  };
+
+  var randomBtn = document.querySelector('button[data-order="random"]');
+  randomBtn.addEventListener('click', function () {
+    randomizeList();
+  });
+
+  var sort = function (items) {
+    return items.sort(function (a, b) {
+      var a = a.querySelector('span.name').textContent;
+      var b = b.querySelector('span.name').textContent;
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    })
+  };
+
+  var sortCalories = function (items) {
+    return items.sort(function (a, b) {
+      var a = a.querySelector('span.calories').textContent;
+      var b = b.querySelector('span.calories').textContent;
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    })
+  };
+
+  var sortByName = function () {
+    var list = document.querySelector('.recipe').parentNode;
+    var nodes = list.children;
+    nodes = Array.prototype.slice.call(nodes);
+    nodes = sort(nodes);
+    for (var i = 0; i < nodes.length; i++) {
+      list.appendChild(nodes[i]);
+    }
+  };
+
+  var sortByCalories = function () {
+    var list = document.querySelector('.recipe').parentNode;
+    var nodes = list.children;
+    nodes = Array.prototype.slice.call(nodes);
+    nodes = sortCalories(nodes);
+    for (var i = 0; i < nodes.length; i++) {
+      list.appendChild(nodes[i]);
+    }
+  };
+
+  var sortByCaloriesBtn = document.querySelector('button[data-order="calories"]');
+  sortByCaloriesBtn.addEventListener('click', function () {
+    sortByCalories();
+  });
+
+  var sortByNamtBtn = document.querySelector('button[data-order="name"]');
+  sortByNamtBtn.addEventListener('click', function () {
+    sortByName();
+  });
+
+  var ingredientsCard = document.querySelectorAll('ul.ingredients');
+  Array.from(ingredientsCard).forEach(function (ingredientCard) {
+    ingredientCard.classList.toggle('hide');
+  });
+
+  var createATagWrapper = function (toWrap, url) {
+    var aTag = document.createElement("a");
+    aTag.href = url;
+    aTag.target = "_blank";
+    toWrap.parentNode.insertBefore(aTag, toWrap);
+    aTag.appendChild(toWrap);
+  };
+
+  var recipeNames = document.querySelectorAll('li.recipe');
+  Array.from(recipeNames).forEach(function (recipe) {
+    var id = recipe.dataset.id;
+    var nameNode = recipe.querySelector('span.name');
+    var name = nameNode.textContent.split(" ").join("-");
+    var url = "https://www.yummly.com/" + name + "-" + id;
+    createATagWrapper(nameNode, url);
+  });
+
+  var ingredientNames = document.querySelectorAll('ul.ingredients li');
+  Array.from(ingredientNames).forEach(function (node) {
+    var ingredientName = node.lastChild.textContent.split(" ").join("-");
+    var url = "https://www.yummly.com/recipes?allowedIngredient=" + ingredientName;
+    createATagWrapper(node, url);
+  })
+
+</script>
+</body>
 </html>
