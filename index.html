@@ -84,7 +84,7 @@
         return items;
       };
 
-      var sortCollection = function (list, orderBy) {
+      var sortNodes = function (list, orderBy) {
         var nodes = list.children;
         nodes = orderBy(Array.prototype.slice.call(nodes));
         for (var i = 0; i < nodes.length; i++) {
@@ -116,21 +116,21 @@
         var recipeParentNode = recipeNodes[0].parentNode;
         var randomBtn = document.querySelector('button[data-order="random"]');
         randomBtn.addEventListener('click', function () {
-          sortCollection(recipeParentNode, randomizeCollection);
+          sortNodes(recipeParentNode, randomizeCollection);
         });
 
         var sortByCaloriesOrder = -1;
         var sortByCaloriesBtn = document.querySelector('button[data-order="calories"]');
         sortByCaloriesBtn.addEventListener('click', function () {
           sortByCaloriesOrder *= -1;
-          sortCollection(recipeParentNode, sortOn('span.calories', sortByCaloriesOrder));
+          sortNodes(recipeParentNode, sortOn('span.calories', sortByCaloriesOrder));
         });
 
         var sortByNameOrder = -1;
         var sortByNametBtn = document.querySelector('button[data-order="name"]');
         sortByNametBtn.addEventListener('click', function () {
           sortByNameOrder *= -1;
-          sortCollection(recipeParentNode, sortOn('span.name', sortByNameOrder));
+          sortNodes(recipeParentNode, sortOn('span.name', sortByNameOrder));
         });
 
         const BASE_URL = "https://www.yummly.com/";
