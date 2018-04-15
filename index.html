@@ -2,46 +2,104 @@
 <html>
 <head>
     <style>
-        a {
-            color: inherit;
-            text-decoration: none;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         ul li.recipe {
-            margin-top: 0.2vw;
+            margin-top: 0.5vw;
+            padding: 0.1vw;
             width: 15vw;
             height: 7vw;
-            background: dodgerblue;
+            background: #284e75;
             color: white;
             font-weight: bold;
-            font-size: 1.2vw;
-            border: solid 2px blue;
+            font-size: 1.1vw;
+            border: solid 2px #284e75;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            width: inherit;
         }
 
         ul li.recipe span.calories {
             display: none;
         }
 
-        .hide {
-            display: none;
+        ul li.recipe span.name {
+            position: absolute;
+            word-wrap: break-word;
+            width: inherit;
+        }
+
+        ul.ingredients.hide {
+            opacity: 0;
+            transition: .5s all ease;
         }
 
         ul.ingredients {
-            margin-left: 15vw;
+            display: inline-block;
+            opacity: 1;
+            transition: .5s all ease;
+            margin-left: 15.2vw;
             margin-top: -1.5vw;
-            /*padding-top: 0.5vw;*/
+            padding-top: 0.5vw;
+            padding-left: 1vw;
             width: 15vw;
-            height: 7.2vw;
+            height: 6.9vw;
             overflow-y: auto;
-            color: blue;
+            color: #284e75;
             font-weight: bold;
             list-style-type: none;
-            box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 1);
+            box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
+        }
+
+        ul.ingredients li span.amount {
+            font-weight: normal;
         }
     </style>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <script src="./utility.js"></script>
     <script>
+      var sortOn = function (selector, order) {
+        return function(items) {
+          return items.sort(function (a, b) {
+            a = a.querySelector(selector).textContent;
+            b = b.querySelector(selector).textContent;
+            if (a < b) return -1 * order;
+            if (a > b) return 1 * order;
+            return 0;
+          })
+        }
+      };
+
+      var randomizeCollection = function (items) {
+        for (var i = items.length - 1; i > 0; i--) {
+          var rand = Math.floor(Math.random() * (i + 1));
+          var temp = items[i];
+          items[i] = items[rand];
+          items[rand] = temp;
+        }
+        return items;
+      };
+
+      var sortCollection = function (list, orderBy) {
+        var nodes = list.children;
+        nodes = orderBy(Array.prototype.slice.call(nodes));
+        for (var i = 0; i < nodes.length; i++) {
+          list.appendChild(nodes[i]);
+        }
+      };
+
+      var createATagWrapper = function (toWrap, url) {
+        var aTag = document.createElement("a");
+        aTag.href = url;
+        aTag.target = "_blank";
+        toWrap.parentNode.insertBefore(aTag, toWrap);
+        aTag.appendChild(toWrap);
+      };
+
       window.addEventListener('load', function () {
         Array.from(document.querySelectorAll('ul.ingredients')).forEach(function (ingredientCard) {
           ingredientCard.classList.toggle('hide');
@@ -61,23 +119,19 @@
           sortCollection(recipeParentNode, randomizeCollection);
         });
 
+        var sortByCaloriesOrder = -1;
         var sortByCaloriesBtn = document.querySelector('button[data-order="calories"]');
         sortByCaloriesBtn.addEventListener('click', function () {
-          sortCollection(recipeParentNode, sortOn('span.calories'));
+          sortByCaloriesOrder *= -1;
+          sortCollection(recipeParentNode, sortOn('span.calories', sortByCaloriesOrder));
         });
 
+        var sortByNameOrder = -1;
         var sortByNametBtn = document.querySelector('button[data-order="name"]');
         sortByNametBtn.addEventListener('click', function () {
-          sortCollection(recipeParentNode, sortOn('span.name'));
+          sortByNameOrder *= -1;
+          sortCollection(recipeParentNode, sortOn('span.name', sortByNameOrder));
         });
-
-        var createATagWrapper = function (toWrap, url) {
-          var aTag = document.createElement("a");
-          aTag.href = url;
-          aTag.target = "_blank";
-          toWrap.parentNode.insertBefore(aTag, toWrap);
-          aTag.appendChild(toWrap);
-        };
 
         const BASE_URL = "https://www.yummly.com/";
         Array.from(recipeNodes).forEach(function (recipeNode) {
