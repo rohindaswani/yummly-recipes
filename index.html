@@ -2,50 +2,98 @@
 <html>
 <head>
     <style>
-        /* add all CSS here */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul li.recipe {
+            margin-top: 0.2vw;
+            width: 15vw;
+            height: 7vw;
+            background: dodgerblue;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2vw;
+            border: solid 2px blue;
+        }
+
+        ul li.recipe span.calories {
+            display: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        ul.ingredients {
+            margin-left: 15vw;
+            margin-top: -1.5vw;
+            /*padding-top: 0.5vw;*/
+            width: 15vw;
+            height: 7.2vw;
+            overflow-y: auto;
+            color: blue;
+            font-weight: bold;
+            list-style-type: none;
+            box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 1);
+        }
     </style>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="./utility.js"></script>
     <script>
-      /* add all JS here */
+      window.addEventListener('load', function () {
+        Array.from(document.querySelectorAll('ul.ingredients')).forEach(function (ingredientCard) {
+          ingredientCard.classList.toggle('hide');
+        });
+
+        var recipeNodes = document.querySelectorAll('ul li.recipe');
+        Array.from(recipeNodes).forEach(function (recipeCard) {
+          recipeCard.addEventListener("click", function (e) {
+            if (e.target.tagName.toLowerCase() !== "li") return;
+            e.target.querySelector('ul.ingredients').classList.toggle('hide');
+          })
+        });
+
+        var recipeParentNode = recipeNodes[0].parentNode;
+        var randomBtn = document.querySelector('button[data-order="random"]');
+        randomBtn.addEventListener('click', function () {
+          sortCollection(recipeParentNode, randomizeCollection);
+        });
+
+        var sortByCaloriesBtn = document.querySelector('button[data-order="calories"]');
+        sortByCaloriesBtn.addEventListener('click', function () {
+          sortCollection(recipeParentNode, sortOn('span.calories'));
+        });
+
+        var sortByNametBtn = document.querySelector('button[data-order="name"]');
+        sortByNametBtn.addEventListener('click', function () {
+          sortCollection(recipeParentNode, sortOn('span.name'));
+        });
+
+        var createATagWrapper = function (toWrap, url) {
+          var aTag = document.createElement("a");
+          aTag.href = url;
+          aTag.target = "_blank";
+          toWrap.parentNode.insertBefore(aTag, toWrap);
+          aTag.appendChild(toWrap);
+        };
+
+        const BASE_URL = "https://www.yummly.com/";
+        Array.from(recipeNodes).forEach(function (recipeNode) {
+          var recipeName = recipeNode.querySelector('span.name');
+          createATagWrapper(recipeName, BASE_URL + recipeName.textContent.split(" ").join("-") + "-" + recipeNode.dataset.id);
+        });
+
+        var ingredientNodes = document.querySelectorAll('ul.ingredients li');
+        Array.from(ingredientNodes).forEach(function (ingredientNode) {
+          var name = ingredientNode.lastChild.textContent.split(" ").join("-");
+          createATagWrapper(ingredientNode, BASE_URL + "recipes?allowedIngredient=" + name);
+        })
+      });
     </script>
 </head>
 <!-- only modify content inside the STYLE and SCRIPT elements above this line -->
-<style>
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-    ul li.recipe {
-        margin-top: 0.2vw;
-        width: 15vw;
-        height: 7vw;
-        background: dodgerblue;
-        color: white;
-        font-weight: bold;
-        font-size: 1.2vw;
-        border: solid 2px blue;
-    }
-
-    ul li.recipe span.calories {
-        display: none;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    ul.ingredients {
-        margin-left: 15vw;
-        margin-top: -1.5vw;
-        /*padding-top: 0.5vw;*/
-        width: 15vw;
-        height: 7.2vw;
-        overflow-y: auto;
-        color: blue;
-        font-weight: bold;
-        list-style-type: none;
-        box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 1);
-    }
-</style>
 <!-- please DO NOT modify anything below this line -->
 <body>
 <button class="sort" data-order="random">Randomize</button>
@@ -160,125 +208,5 @@
         </li>
     </ul>
 </div>
-<script>
-  var recipeCards = document.querySelectorAll('ul li.recipe');
-  Array.from(recipeCards).forEach(function (recipeCard) {
-    recipeCard.addEventListener("click", function (e) {
-      console.log("click", e);
-      var target = e.target;
-      var iCards = target.querySelector('ul.ingredients');
-      iCards.classList.toggle('hide');
-    })
-  });
-
-  var randomizeNodes = function (items) {
-    for (var i = items.length - 1; i > 0; i--) {
-      var rand = Math.floor(Math.random() * (i + 1));
-      var temp = items[i];
-      items[i] = items[rand];
-      items[rand] = temp;
-    }
-
-    return items;
-
-  };
-
-  var randomizeList = function () {
-    var list = document.querySelector('.recipe').parentNode;
-    var nodes = list.children;
-    var i = 0;
-    nodes = Array.prototype.slice.call(nodes);
-    nodes = randomizeNodes(nodes);
-    while (i < nodes.length) {
-      list.appendChild(nodes[i]);
-      i++;
-    }
-  };
-
-  var randomBtn = document.querySelector('button[data-order="random"]');
-  randomBtn.addEventListener('click', function () {
-    randomizeList();
-  });
-
-  var sort = function (items) {
-    return items.sort(function (a, b) {
-      var a = a.querySelector('span.name').textContent;
-      var b = b.querySelector('span.name').textContent;
-      if (a < b) return -1;
-      if (a > b) return 1;
-      return 0;
-    })
-  };
-
-  var sortCalories = function (items) {
-    return items.sort(function (a, b) {
-      var a = a.querySelector('span.calories').textContent;
-      var b = b.querySelector('span.calories').textContent;
-      if (a < b) return -1;
-      if (a > b) return 1;
-      return 0;
-    })
-  };
-
-  var sortByName = function () {
-    var list = document.querySelector('.recipe').parentNode;
-    var nodes = list.children;
-    nodes = Array.prototype.slice.call(nodes);
-    nodes = sort(nodes);
-    for (var i = 0; i < nodes.length; i++) {
-      list.appendChild(nodes[i]);
-    }
-  };
-
-  var sortByCalories = function () {
-    var list = document.querySelector('.recipe').parentNode;
-    var nodes = list.children;
-    nodes = Array.prototype.slice.call(nodes);
-    nodes = sortCalories(nodes);
-    for (var i = 0; i < nodes.length; i++) {
-      list.appendChild(nodes[i]);
-    }
-  };
-
-  var sortByCaloriesBtn = document.querySelector('button[data-order="calories"]');
-  sortByCaloriesBtn.addEventListener('click', function () {
-    sortByCalories();
-  });
-
-  var sortByNamtBtn = document.querySelector('button[data-order="name"]');
-  sortByNamtBtn.addEventListener('click', function () {
-    sortByName();
-  });
-
-  var ingredientsCard = document.querySelectorAll('ul.ingredients');
-  Array.from(ingredientsCard).forEach(function (ingredientCard) {
-    ingredientCard.classList.toggle('hide');
-  });
-
-  var createATagWrapper = function (toWrap, url) {
-    var aTag = document.createElement("a");
-    aTag.href = url;
-    aTag.target = "_blank";
-    toWrap.parentNode.insertBefore(aTag, toWrap);
-    aTag.appendChild(toWrap);
-  };
-
-  var recipeNames = document.querySelectorAll('li.recipe');
-  Array.from(recipeNames).forEach(function (recipe) {
-    var id = recipe.dataset.id;
-    var nameNode = recipe.querySelector('span.name');
-    var name = nameNode.textContent.split(" ").join("-");
-    var url = "https://www.yummly.com/" + name + "-" + id;
-    createATagWrapper(nameNode, url);
-  });
-
-  var ingredientNames = document.querySelectorAll('ul.ingredients li');
-  Array.from(ingredientNames).forEach(function (node) {
-    var ingredientName = node.lastChild.textContent.split(" ").join("-");
-    var url = "https://www.yummly.com/recipes?allowedIngredient=" + ingredientName;
-    createATagWrapper(node, url);
-  })
-
-</script>
 </body>
 </html>
