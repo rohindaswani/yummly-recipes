@@ -62,6 +62,7 @@
     </style>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script>
+      const BASE_URL = "https://www.yummly.com/";
       var sortOn = function (selector, order) {
         return function(items) {
           return items.sort(function (a, b) {
@@ -103,14 +104,20 @@
       window.addEventListener('load', function () {
         Array.from(document.querySelectorAll('ul.ingredients')).forEach(function (ingredientCard) {
           ingredientCard.classList.toggle('hide');
+          Array.from(ingredientCard.querySelectorAll('li')).forEach(function (ingredientNode) {
+            var name = ingredientNode.lastChild.textContent.split(" ").join("-");
+            createATagWrapper(ingredientNode, BASE_URL + "recipes?allowedIngredient=" + name);
+          })
         });
 
         var recipeNodes = document.querySelectorAll('ul li.recipe');
         Array.from(recipeNodes).forEach(function (recipeCard) {
           recipeCard.addEventListener("click", function (e) {
-            if (e.target.tagName.toLowerCase() !== "li") return;
+            if (!e.target.classList.contains('recipe')) return;
             e.target.querySelector('ul.ingredients').classList.toggle('hide');
-          })
+          });
+          var recipeName = recipeCard.querySelector('span.name');
+          createATagWrapper(recipeName, BASE_URL + recipeName.textContent.split(" ").join("-") + "-" + recipeCard.dataset.id);
         });
 
         var recipeParentNode = recipeNodes[0].parentNode;
@@ -132,18 +139,6 @@
           sortByNameOrder *= -1;
           sortNodes(recipeParentNode, sortOn('span.name', sortByNameOrder));
         });
-
-        const BASE_URL = "https://www.yummly.com/";
-        Array.from(recipeNodes).forEach(function (recipeNode) {
-          var recipeName = recipeNode.querySelector('span.name');
-          createATagWrapper(recipeName, BASE_URL + recipeName.textContent.split(" ").join("-") + "-" + recipeNode.dataset.id);
-        });
-
-        var ingredientNodes = document.querySelectorAll('ul.ingredients li');
-        Array.from(ingredientNodes).forEach(function (ingredientNode) {
-          var name = ingredientNode.lastChild.textContent.split(" ").join("-");
-          createATagWrapper(ingredientNode, BASE_URL + "recipes?allowedIngredient=" + name);
-        })
       });
     </script>
 </head>
